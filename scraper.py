@@ -35,11 +35,10 @@ def get_scraped_attributes(title_slug):
     url = 'https://leetcode.com/problems/' + title_slug
     
     while True:
-        page = requests.get(url)
-        soup = BeautifulSoup(page.text, 'html.parser')
-        obj = json.loads(soup.find(id = '__NEXT_DATA__').string)
-
         try:
+            page = requests.get(url)
+            soup = BeautifulSoup(page.text, 'html.parser')
+            obj = json.loads(soup.find(id = '__NEXT_DATA__').string)
             ob = obj['props']['pageProps']['dehydratedState']['queries'][0]['state']['data']['question']
             break
         except:
@@ -51,8 +50,6 @@ def main():
     page = requests.get('https://leetcode.com/api/problems/algorithms/')
     obj = json.loads(page.text)
     ob = obj['stat_status_pairs']
-
-    ob = ob[ : 2]
 
     total = len(ob)
     counter = 0
